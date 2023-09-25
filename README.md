@@ -64,18 +64,13 @@ new_model = map_module(old_model, converter)  # In-place model construction.
 
 ### Installation
 
-The simplest and preferred installation way is installation from PyPI.
-
-```shell
-pip install -U fewbit
-```
 
 FewBit is written in Python, but it implements some opertions in C++/CUDA to archive better performance.
 So, building from source requires CUDA Toolkit and CMake as a build system.
 The latest release can be installed with the following command.
 
 ```shell
-pip install -U https://github.com/SkoltechAI/fewbit.git
+pip install -U git+https://github.com/shonenkov/fewbit.git
 ```
 
 Another one way to get FewBit is an installation from pre-built wheels from
