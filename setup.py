@@ -57,6 +57,10 @@ class build_ext(build_ext_base):
         build_dir = self.build_temp
         install_dir = self.build_lib
         source_dir = '.'
+
+        environ['CMAKE_CUDA_COMPILER'] = '/usr/local/cuda/bin/nvcc'
+        environ['CUDACXX'] = '/usr/local/cuda/bin/nvcc'
+
         if self.inplace:
             environ['CMAKE_INSTALL_MODE'] = 'SYMLINK_OR_COPY'
             install_dir = Path().cwd().absolute()
@@ -111,8 +115,11 @@ def get_torch_attr(script):
     # We do not want import torch directly in order to save 200+Mb of memory
     # during building extension.
     command = [executable, '-c', script]
-    output = check_output(command, encoding='utf-8', timeout=60, shell=True)
+    # command = [executable, 'echo', '$HOME']
+    # output = check_output(f'{executable} -c "{script}"', capture_output=False, text=True, shell=True)
+    output = check_output(command, encoding='utf-8', timeout=60, env={'PYTHONPATH': executable})
     return output.strip()
+
 
 def get_torch_cmake_prefix_path():
     script = 'import torch.utils; print(torch.utils.cmake_prefix_path)'
@@ -129,10 +136,14 @@ try:
     fewbit_version = parse_version(get_version())
 except LookupError:
     fewbit_version = Version('0.0.0')
+
+print('DEBUG:', get_torch_cmake_prefix_path())
 torch_version = parse_version(get_torch_version())
 
 # FewBit version is <fewbit-public>[+<torch-local>.pt<torch-base>] version.
 version = fewbit_version.base_version
+
+
 if torch_version.local:
     version += f'+{torch_version.local}.pt{torch_version.base_version}'
 else:
@@ -143,7 +154,7 @@ dump_version('.', version, 'fewbit/version.py')
 
 # We fix Torch version in order to maintain compatibility between Torch and its
 # extension as well as CUDA ABI.
-install_requires = ['numpy', f'torch=={torch_version.base_version}']
+install_requires = ['numpy']
 
 setup(name='fewbit',
       version=version,
