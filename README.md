@@ -1,5 +1,15 @@
 # FewBit
 
+### Installation
+
+FewBit is written in Python, but it implements some opertions in C++/CUDA to archive better performance.
+So, building from source requires CUDA Toolkit and CMake as a build system.
+The latest release can be installed with the following command.
+
+```shell
+pip install -U git+https://github.com/shonenkov/fewbit.git
+```
+
 **FewBit** &mdash; a library for memory efficient training of large neural networks.
 Its efficiency originates from storage optimizations applied to backward pass and memory footprint reduction for saved tensors between forward and backward passes.
 Namely, the library provides its own implementation of common activation functions and linear layer since they contribute the most to memory usage in training time.
@@ -61,32 +71,6 @@ new_model = map_module(old_model, converter)  # In-place model construction.
 ```
 
 ![Quantized Gradients of Activation Functions][4]
-
-### Installation
-
-
-FewBit is written in Python, but it implements some opertions in C++/CUDA to archive better performance.
-So, building from source requires CUDA Toolkit and CMake as a build system.
-The latest release can be installed with the following command.
-
-```shell
-pip install -U git+https://github.com/shonenkov/fewbit.git
-```
-
-Another one way to get FewBit is an installation from pre-built wheels from
-custom PyPI. Assume that CUDA version is 11.7 and desired PyTorch version is
-2.0.1 then the command below downloads and installes PyTorch of specified
-version and the latest availiable FewBit.
-
-```shell
-pip install fewbit torch==2.0.1 \
-    --extra-index-url https://download.pytorch.org/whl/cu117 \
-    --extra-index-url https://mirror.daskol.xyz/pypi/cu117/pt2.0.1
-```
-
-Note that URLs of the custom PyPIs are built from CUDA version and PyTorch
-version and can be manually adjusted (see [this page][7] for list of pre-built
-wheels).
 
 ### List of Activation Functions
 
