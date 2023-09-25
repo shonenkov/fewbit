@@ -120,7 +120,7 @@ class FallbackFunc(T.autograd.Function):
         # an actual implementation of forward pass. See PEP-3135 for details.
         #
         # [1]: https://peps.python.org/pep-3135/
-        return __class__._impl(input, *args, **kwargs)
+        return impl(input, *args, **kwargs)
 
     @staticmethod
     def backward(ctx, grad_output):
