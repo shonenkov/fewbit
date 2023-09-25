@@ -111,7 +111,7 @@ def get_torch_attr(script):
     # We do not want import torch directly in order to save 200+Mb of memory
     # during building extension.
     command = [executable, '-c', script]
-    output = check_output(command, encoding='utf-8', timeout=60)
+    output = check_output(command, encoding='utf-8', timeout=60, shell=True)
     return output.strip()
 
 def get_torch_cmake_prefix_path():
