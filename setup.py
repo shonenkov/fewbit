@@ -37,8 +37,8 @@ class build_ext(build_ext_base):
         self.cmake_generator = None
         self.cmake_options = None
         self.cmake_prefix_path = None
-        self.cuda = False
-        self.cuda_arch = 'common'
+        self.cuda = True
+        self.cuda_arch = '8.6'  # 'common'
 
     def run(self):
         cmake_extensions = []
@@ -95,6 +95,7 @@ class build_ext(build_ext_base):
             cmd.append(f'-DTORCH_CUDA_ARCH_LIST={self.cuda_arch.capitalize()}')
         if self.debug:
             cmd.append('-DCMAKE_BUILD_TYPE=Debug')
+        cmd.append('-DTORCH_USE_CUDA_DSA=1')
         if self.cmake_options:
             cmd.extend(self.cmake_options.split())
         self.spawn(cmd)

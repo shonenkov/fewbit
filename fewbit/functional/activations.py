@@ -2,6 +2,7 @@
 #   filename: functional.py
 
 import numpy as np
+import torch
 import torch as T
 
 from functools import partial, wraps
@@ -191,6 +192,9 @@ def dispatch(name, wrapper):
 
         # The first argument is always input tensor.
         input = bound_args[0]
+        dtype = input.dtype
+        if dtype != torch.float32:
+            input = input.type(torch.float32)
 
         # Decide what quantisation to use.
         use_builtin = bound_kwargs['bits'] is not None
@@ -210,7 +214,7 @@ def dispatch(name, wrapper):
             borders, values = store.get(name, bits, input.device, input.dtype)
 
         return wrapper(input, borders[1:-1].to(input), values.to(input),
-                       *bound_args[1:], **bound_kwargs)
+                       *bound_args[1:], **bound_kwargs).to(dtype)
 
     forward_call.__qualname__ = name
     forward_call.__signature__ = sig

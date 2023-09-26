@@ -5,6 +5,7 @@
  * entire block i.e. all `state` buffers are alligned according to `8 * nobits *
  * sizeof(T)` bytes border (either 8 bytes or 16 bytes).
  */
+#include <stdint.h>
 
 #pragma once
 
