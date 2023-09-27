@@ -58,8 +58,8 @@ class build_ext(build_ext_base):
         install_dir = self.build_lib
         source_dir = '.'
 
-        environ['CMAKE_CUDA_COMPILER'] = '/usr/local/cuda/bin/nvcc'
-        environ['CUDACXX'] = '/usr/local/cuda/bin/nvcc'
+        environ['CMAKE_CUDA_COMPILER'] = environ.get('CMAKE_CUDA_COMPILER', '/usr/local/cuda/bin/nvcc')
+        environ['CUDACXX'] = environ.get('CUDACXX', '/usr/local/cuda/bin/nvcc')
 
         if self.inplace:
             environ['CMAKE_INSTALL_MODE'] = 'SYMLINK_OR_COPY'
