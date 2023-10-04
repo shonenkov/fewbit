@@ -10,6 +10,11 @@ The latest release can be installed with the following command.
 pip install -U git+https://github.com/shonenkov/fewbit.git
 ```
 
+#### 4090 RTX, cuda12.2:
+```
+CUDA_ARCH="8.6" pip install -U git+https://github.com/shonenkov/fewbit.git
+```
+
 **FewBit** &mdash; a library for memory efficient training of large neural networks.
 Its efficiency originates from storage optimizations applied to backward pass and memory footprint reduction for saved tensors between forward and backward passes.
 Namely, the library provides its own implementation of common activation functions and linear layer since they contribute the most to memory usage in training time.
