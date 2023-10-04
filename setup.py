@@ -38,7 +38,7 @@ class build_ext(build_ext_base):
         self.cmake_options = None
         self.cmake_prefix_path = None
         self.cuda = True
-        self.cuda_arch = '8.6'  # 'common'
+        self.cuda_arch = environ.get('CUDA_ARCH', '8.6')  # 'common'
 
     def run(self):
         cmake_extensions = []
